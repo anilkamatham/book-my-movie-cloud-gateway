@@ -1,0 +1,30 @@
+server:
+  port: 8086
+spring:
+  application:
+    name: bookmymovie-cloud-gate-way
+  cloud:
+    gateway:
+      routes:
+      - id: movie-info-service
+        uri: lb://BOOKMYMOVIE-MOVIE-INFO-SERVICE
+        predicates:
+        - Path=/api/movies/**
+      - id: movie-theatre-service
+        uri: lb://BOOKMYMOVIE-MOVIE-THEATRE-SERVICE
+        predicates:
+        - Path=/api/theater/** 
+      - id: movie-show-service
+        uri: lb://BOOKMYMOVIE-MOVIE-SHOW-SERVICE
+        predicates:
+        - Path=/api/show/**             
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8084/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+    
+  instance:
+    hostname: localhost 
+          
